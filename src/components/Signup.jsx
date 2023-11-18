@@ -69,7 +69,7 @@ export default function Signup({ onToggleForm }) {
             DevviCake
           </div>
           <div className="py-8 lg:py-10">
-            <h2 className="text-2xl lg:text-3xl font-bold text-purple-500 mb-2">Sign in to Account</h2>
+            <h2 className="text-2xl lg:text-3xl font-bold text-purple-500 mb-2">Sign Up Account</h2>
             <div className="border-2 w-8 lg:w-10 border-purple-500 inline-block mb-2"></div>
             <div className="flex justify-center my-4 lg:my-6">
               <a href="#" className="border-2 border-gray-200 rounded-full p-2 mx-1">
