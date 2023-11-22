@@ -2,65 +2,14 @@ import { Fragment, useState, useEffect } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 import { XMarkIcon } from '@heroicons/react/24/outline';
 
-const products = [
-  {
-    id: 1,
-    name: 'Strawberry Mille Crepes',
-    href: '#',
-    color: 'Salmon',
-    price: 90.00, 
-    quantity: 1,
-    imageSrc: 'https://th.bing.com/th/id/OIP.a2rdLF3EU5T9FnKf_UfrAQHaKT?pid=ImgDet&rs=1',
-    imageAlt: 'Mille Crepes with Strawberry flavour',
-  },
-  {
-    id: 2,
-    name: 'Green Tea Mille Crepes',
-    href: '#',
-    color: 'Blue',
-    price: 32.00, 
-    quantity: 1,
-    imageSrc: 'https://i.pinimg.com/originals/6e/c2/75/6ec27532465fd1f5853b6b60384184c6.jpg',
-    imageAlt: 'Mille Crepes with Green Tea Flavour',
-  },
-  // More products...
-];
-
 export default function Cart({ updateCartItemCount }) {
   const [open, setOpen] = useState(true);
-  const [cartProducts, setCartProducts] = useState(products);
 
   useEffect(() => {
-    // Update cart item count on mount
-    updateCartItemCount(cartProducts.length);
 
-    // Clean-up function
     return () => {
-      // You can perform any clean-up here if needed
     };
-  }, [cartProducts, updateCartItemCount]);
-
-  const handleRemoveProduct = (productId) => {
-    setCartProducts((prevProducts) => {
-      const updatedProducts = prevProducts.filter((product) => product.id !== productId);
-      updateCartItemCount(updatedProducts.length); // Update cart item count
-      return updatedProducts;
-    });
-  };
-
-  const handleAdjustQuantity = (productId, newQuantity) => {
-    setCartProducts((prevProducts) => {
-      const updatedProducts = prevProducts.map((product) =>
-        product.id === productId ? { ...product, quantity: newQuantity } : product
-      );
-      updateCartItemCount(updatedProducts.length); // Update cart item count
-      return updatedProducts;
-    });
-  };
-
-  const calculateTotalPrice = () => {
-    return cartProducts.reduce((total, product) => total + product.price * product.quantity, 0).toFixed(2);
-  };
+  }, []);
 
   return (
     <Transition.Root show={open} as={Fragment}>
@@ -110,58 +59,54 @@ export default function Cart({ updateCartItemCount }) {
                       <div className="mt-8">
                         <div className="flow-root">
                           <ul role="list" className="-my-6 divide-y divide-gray-200">
-                            {cartProducts.map((product) => (
-                              <li key={product.id} className="flex py-6">
-                                <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
-                                  <img
-                                    src={product.imageSrc}
-                                    alt={product.imageAlt}
-                                    className="h-full w-full object-cover object-center"
-                                  />
-                                </div>
+                            <li className="flex py-6">
+                              <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
+                                <img
+                                  src="https://th.bing.com/th/id/OIP.a2rdLF3EU5T9FnKf_UfrAQHaKT?pid=ImgDet&rs=1"
+                                  alt="Mille Crepes with Strawberry flavour"
+                                  className="h-full w-full object-cover object-center"
+                                />
+                              </div>
 
-                                <div className="ml-4 flex flex-1 flex-col">
-                                  <div>
-                                    <div className="flex justify-between text-base font-medium text-gray-900">
-                                      <h3>
-                                        <a href={product.href}>{product.name}</a>
-                                      </h3>
-                                      <p className="ml-4">${product.price.toFixed(2)}</p>
-                                    </div>
-                                    <p className="mt-1 text-sm text-gray-500">{product.color}</p>
+                              <div className="ml-4 flex flex-1 flex-col">
+                                <div>
+                                  <div className="flex justify-between text-base font-medium text-gray-900">
+                                    <h3>
+                                      <a href="#">Strawberry Mille Crepes</a>
+                                    </h3>
+                                    <p className="ml-4">$90.00</p>        
                                   </div>
-                                  <div className="flex flex-1 items-end justify-between text-sm">
-                                    <p className="text-gray-500">Qty {product.quantity}</p>
-
-                                    <div className="flex">
-                                      <button
-                                        type="button"
-                                        className="font-medium text-indigo-600 hover:text-indigo-500"
-                                        onClick={() => handleAdjustQuantity(product.id, product.quantity + 1)}
-                                      >
-                                        +
-                                      </button>
-                                      <button
-                                        type="button"
-                                        className="font-medium text-indigo-600 hover:text-indigo-500"
-                                        onClick={() => handleAdjustQuantity(product.id, Math.max(1, product.quantity - 1))}
-                                      >
-                                        -
-                                      </button>
-                                    </div>
-                                    <div className="flex">
-                                      <button
-                                        type="button"
-                                        className="font-medium text-indigo-600 hover:text-indigo-500"
-                                        onClick={() => handleRemoveProduct(product.id)}
-                                      >
-                                        Remove
-                                      </button>
-                                    </div>
-                                  </div>
+                                  <p className="mt-1 text-sm text-gray-500">Salmon</p>
                                 </div>
-                              </li>
-                            ))}
+                                <div className="flex flex-1 items-end justify-between text-sm">
+                                  <p className="text-gray-500">Qty 1</p>
+                                </div>
+                              </div>
+                            </li>
+                            <li className="flex py-6">
+                              <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
+                                <img
+                                  src="https://i.pinimg.com/originals/6e/c2/75/6ec27532465fd1f5853b6b60384184c6.jpg"
+                                  alt="Mille Crepes with Green Tea Flavour"
+                                  className="h-full w-full object-cover object-center"
+                                />
+                              </div>
+
+                              <div className="ml-4 flex flex-1 flex-col">
+                                <div>
+                                  <div className="flex justify-between text-base font-medium text-gray-900">
+                                    <h3>
+                                      <a href="#">Green Tea Mille Crepes</a>
+                                    </h3>
+                                    <p className="ml-4">$32.00</p>
+                                  </div>
+                                  <p className="mt-1 text-sm text-gray-500">Blue</p>
+                                </div>
+                                <div className="flex flex-1 items-end justify-between text-sm">
+                                  <p className="text-gray-500">Qty 1</p>
+                                </div>
+                              </div>
+                            </li>
                           </ul>
                         </div>
                       </div>
@@ -170,7 +115,7 @@ export default function Cart({ updateCartItemCount }) {
                     <div className="border-t border-gray-200 px-4 py-6 sm:px-6">
                       <div className="flex justify-between text-base font-medium text-gray-900">
                         <p>Subtotal</p>
-                        <p>${calculateTotalPrice()}</p>
+                        <p>$122.00</p>
                       </div>
                       <p className="mt-0.5 text-sm text-gray-500">Shipping and taxes calculated at checkout.</p>
                       <div className="mt-6">
@@ -184,15 +129,15 @@ export default function Cart({ updateCartItemCount }) {
                       <div className="mt-6 flex justify-center text-center text-sm text-gray-500">
                         <p className='mr-2'>
                           or
-                          </p>
-                          <button
-                            type="button"
-                            className="font-medium text-indigo-600 hover:text-indigo-500"
-                            onClick={() => setOpen(false)}
-                          >
-                            Continue Shopping
-                            <span aria-hidden="true"> &rarr;</span>
-                          </button>
+                        </p>
+                        <button
+                          type="button"
+                          className="font-medium text-indigo-600 hover:text-indigo-500"
+                          onClick={() => setOpen(false)}
+                        >
+                          Continue Shopping
+                          <span aria-hidden="true"> &rarr;</span>
+                        </button>
                       </div>
                     </div>
                   </div>

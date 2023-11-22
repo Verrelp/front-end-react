@@ -1,28 +1,16 @@
-
 import React, { useState } from 'react';
 import Navbar from '@/components/Navbar';
 import Header from '@/components/Header';
-import SignIn from '@/components/Form';
-import Signup from '@/components/Signup';
 import Cart from '@/components/Cart';
+import Menu from '@/components/Menu';
 import { useRouter } from 'next/router';
 
 export default function Home() {
-  const [showSignIn, setShowSignIn] = useState(true);
   const [showCart, setShowCart] = useState(false);
   const [cartItemCount, setCartItemCount] = useState(0);
-  const [userIsLoggedIn, setUserIsLoggedIn] = useState(false); // Add this line
+  const [selectedItems, setSelectedItems] = useState([]);
+
   const router = useRouter();
-
-  const handleToggleForm = async () => {
-    setShowSignIn((prev) => !prev);
-
-    // Assuming you are using some state to determine the login status
-    if (!showSignIn && userIsLoggedIn) {
-      // Redirect to the Dashboard page
-      router.push('/main');
-    }
-  };
 
   const handleToggleCart = () => {
     setShowCart((prev) => !prev);
@@ -32,16 +20,18 @@ export default function Home() {
     setCartItemCount(count);
   };
 
+  const handleAddToCart = (itemName, itemPrice) => {
+    const newItem = { name: itemName, price: itemPrice };
+    setSelectedItems((prev) => [...prev, newItem]);
+    setCartItemCount((prev) => prev + 1);
+  };
+
   return (
     <div>
       <Navbar onToggleCart={handleToggleCart} cartItemCount={cartItemCount} />
       <Header />
-      {showCart && <Cart updateCartItemCount={updateCartItemCount} />}
-      {showSignIn ? (
-        <SignIn onToggleForm={handleToggleForm} setUserIsLoggedIn={setUserIsLoggedIn} />
-      ) : (
-        <Signup onToggleForm={handleToggleForm} setUserIsLoggedIn={setUserIsLoggedIn} />
-      )}
+      {showCart && <Cart items={selectedItems} updateCartItemCount={updateCartItemCount} />}
+      <Menu onAddToCart={handleAddToCart} />
     </div>
   );
 }
