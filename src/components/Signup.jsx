@@ -120,12 +120,6 @@ export default function Signup({ onToggleForm }) {
                   onChange={handleRepasswordChange}
                 />
               </div>
-              <div className="flex justify-between w-full lg:w-64 mb-5">
-                <label className="flex items-center text-xs">
-                  <input type="checkbox" name="remember" className="mr-1" />Remember Me
-                </label>
-                <a href="#" className="text-xs">Forgot Password?</a>
-              </div>
               <a
                 href="#"
                 className="border-2 border-green text-white rounded-full px-8 py-2 inline-block font-semibold hover:bg-purple-600 hover:text-white"
